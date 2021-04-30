@@ -19,9 +19,10 @@ set -e
 platforms=("linux:amd64" "darwin:amd64")
 for platform in "${platforms[@]}"
 do
-  GOOS="${platform%%:*}"
-  GOARCH="${platform#*:}"
-  echo $GOOS
-  echo $GOARCH
-  CGO_ENABLED=0 GOOS=$GOOS GOARCH=$GOARCH go build -o sparkctl-${GOOS}-${GOARCH}
+    GOOS="${platform%%:*}"
+    GOARCH="${platform#*:}"
+    echo $GOOS
+    echo $GOARCH
+    GOPROXY=https://goproxy.io,direct
+    CGO_ENABLED=0 GOOS=$GOOS GOARCH=$GOARCH go build -o sparkctl-${GOOS}-${GOARCH}
 done
